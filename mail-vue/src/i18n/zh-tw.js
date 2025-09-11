@@ -289,6 +289,19 @@ const zhTW = {
     clear: '清除',
     include: '包含',
     delAllEmailConfirm: '您確定要刪除嗎？',
-    s3Configuration: 'S3 設定'
+    s3Configuration: 'S3 設定',
+    welcomeEmail: '歡迎郵件',
+    welcomeEmailDesc: '用戶註冊成功後自動發送歡迎郵件',
+    welcomeEmailSetting: '歡迎郵件設定',
+    welcomeEmailSettingDesc: '配置用戶註冊成功後發送的歡迎郵件內容',
+    welcomeEmailSubject: '郵件主題',
+    welcomeEmailSubjectPlaceholder: '請輸入歡迎郵件主題',
+    welcomeEmailContent: '郵件內容 (HTML)',
+    welcomeEmailContentPlaceholder: '請輸入歡迎郵件的HTML內容',
+    welcomeEmailText: '純文字內容',
+    welcomeEmailTextPlaceholder: '請輸入歡迎郵件的純文字內容',
+    welcomeEmailTips: '可用變數：',
+    userEmailVariable: '用戶郵箱地址',
+    registerTimeVariable: '註冊時間'
 }
 export default zhTW

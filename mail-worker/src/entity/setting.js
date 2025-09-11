@@ -39,6 +39,10 @@ export const setting = sqliteTable('setting', {
 	region: text('region').default('').notNull(),
 	endpoint: text('endpoint').default('').notNull(),
 	s3AccessKey: text('s3_access_key').default('').notNull(),
+	welcomeEmailEnabled: integer('welcome_email_enabled').default(1).notNull(),
+	welcomeEmailSubject: text('welcome_email_subject').default('欢迎使用邮箱服务！').notNull(),
+	welcomeEmailContent: text('welcome_email_content').default('<h2>欢迎使用我们的邮箱服务！</h2><p>亲爱的用户，感谢您注册我们的邮箱服务。</p><p>您的邮箱地址：<strong>{{email}}</strong></p><p>注册时间：{{registerTime}}</p><p>如有任何问题，请随时联系我们。</p>').notNull(),
+	welcomeEmailText: text('welcome_email_text').default('欢迎使用我们的邮箱服务！感谢您注册我们的邮箱服务。您的邮箱地址：{{email}}，注册时间：{{registerTime}}。如有任何问题，请随时联系我们。').notNull(),
 	s3SecretKey: text('s3_secret_key').default('').notNull()
 });
 export default setting

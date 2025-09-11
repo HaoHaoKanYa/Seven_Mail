@@ -107,6 +107,10 @@ export const settingConst = {
 	noRecipient: {
 		OPEN: 0,
 		CLOSE: 1,
+	},
+	welcomeEmail: {
+		ENABLED: 1,
+		DISABLED: 0,
 	}
 }
 

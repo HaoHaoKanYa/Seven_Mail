@@ -289,7 +289,20 @@ const en = {
     clear: 'Clear',
     include: 'Include',
     delAllEmailConfirm: 'Do you really want to delete it?',
-    s3Configuration: 'S3 Configuration'
+    s3Configuration: 'S3 Configuration',
+    welcomeEmail: 'Welcome Email',
+    welcomeEmailDesc: 'Automatically send welcome email after user registration',
+    welcomeEmailSetting: 'Welcome Email Settings',
+    welcomeEmailSettingDesc: 'Configure welcome email content sent after user registration',
+    welcomeEmailSubject: 'Email Subject',
+    welcomeEmailSubjectPlaceholder: 'Enter welcome email subject',
+    welcomeEmailContent: 'Email Content (HTML)',
+    welcomeEmailContentPlaceholder: 'Enter welcome email HTML content',
+    welcomeEmailText: 'Plain Text Content',
+    welcomeEmailTextPlaceholder: 'Enter welcome email plain text content',
+    welcomeEmailTips: 'Available variables:',
+    userEmailVariable: 'User email address',
+    registerTimeVariable: 'Registration time'
 }
 
 export default en

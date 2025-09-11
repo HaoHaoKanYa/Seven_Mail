@@ -172,7 +172,11 @@ const settingService = {
 			noticeWidth: settingRow.noticeWidth,
 			noticeOffset: settingRow.noticeOffset,
 			notice: settingRow.notice,
-			loginDomain: settingRow.loginDomain
+			loginDomain: settingRow.loginDomain,
+			welcomeEmailEnabled: settingRow.welcomeEmailEnabled,
+			welcomeEmailSubject: settingRow.welcomeEmailSubject,
+			welcomeEmailContent: settingRow.welcomeEmailContent,
+			welcomeEmailText: settingRow.welcomeEmailText
 		};
 	}
 };

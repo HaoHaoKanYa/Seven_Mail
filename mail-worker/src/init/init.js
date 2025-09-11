@@ -84,7 +84,11 @@ const init = {
 			`ALTER TABLE setting ADD COLUMN no_recipient INTEGER NOT NULL DEFAULT 1;`,
 			`UPDATE role SET avail_domain = '' WHERE role.avail_domain LIKE '@%';`,
 			`UPDATE role SET ban_email = '';`,
-			`CREATE INDEX IF NOT EXISTS idx_email_user_id_account_id ON email(user_id, account_id);`
+			`CREATE INDEX IF NOT EXISTS idx_email_user_id_account_id ON email(user_id, account_id);`,
+			`ALTER TABLE setting ADD COLUMN welcome_email_enabled INTEGER NOT NULL DEFAULT 1;`,
+			`ALTER TABLE setting ADD COLUMN welcome_email_subject TEXT NOT NULL DEFAULT '欢迎使用邮箱服务！';`,
+			`ALTER TABLE setting ADD COLUMN welcome_email_content TEXT NOT NULL DEFAULT '<h2>欢迎使用我们的邮箱服务！</h2><p>亲爱的用户，感谢您注册我们的邮箱服务。</p><p>您的邮箱地址：<strong>{{email}}</strong></p><p>注册时间：{{registerTime}}</p><p>如有任何问题，请随时联系我们。</p>';`,
+			`ALTER TABLE setting ADD COLUMN welcome_email_text TEXT NOT NULL DEFAULT '欢迎使用我们的邮箱服务！感谢您注册我们的邮箱服务。您的邮箱地址：{{email}}，注册时间：{{registerTime}}。如有任何问题，请随时联系我们。';`
 		];
 
 		const promises = ADD_COLUMN_SQL_LIST.map(async (sql) => {

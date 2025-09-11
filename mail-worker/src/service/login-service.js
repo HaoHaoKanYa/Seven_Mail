@@ -19,6 +19,7 @@ import dayjs from 'dayjs';
 import { toUtc } from '../utils/date-uitil';
 import { t } from '../i18n/i18n.js';
 import verifyRecordService from './verify-record-service';
+import emailService from './email-service';
 
 const loginService = {
 
@@ -130,6 +131,13 @@ const loginService = {
 		if (registerVerify === settingConst.registerVerify.COUNT && !regVerifyOpen) {
 			const row = await verifyRecordService.increaseRegCount(c);
 			return {regVerifyOpen: row.count >= regVerifyCount}
+		}
+
+		// 发送欢迎邮件（异步执行，不阻塞注册流程）
+		try {
+			await emailService.sendWelcomeEmail(c, email, userId);
+		} catch (error) {
+			console.error('发送欢迎邮件失败，但不影响注册流程：', error);
 		}
 
 		return {regVerifyOpen}

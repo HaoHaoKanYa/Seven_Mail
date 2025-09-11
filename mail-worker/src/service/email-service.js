@@ -15,6 +15,7 @@ import roleService from './role-service';
 import user from '../entity/user';
 import starService from './star-service';
 import dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import kvConst from '../const/kv-const';
 import { t } from '../i18n/i18n'
 import r2Service from './r2-service';
@@ -655,6 +656,93 @@ const emailService = {
 		await attService.removeByEmailIds(c, emailIds);
 
 		await orm(c).delete(email).where(conditions.length > 1 ? and(...conditions) : conditions[0]).run();
+	},
+
+	async sendWelcomeEmail(c, userEmail, userId) {
+		try {
+			const { welcomeEmailEnabled, welcomeEmailSubject, welcomeEmailContent, welcomeEmailText, resendTokens } = await settingService.query(c);
+
+			// 检查是否启用欢迎邮件
+			if (welcomeEmailEnabled !== settingConst.welcomeEmail.ENABLED) {
+				return;
+			}
+
+			// 获取用户的默认账户
+			const accountRow = await accountService.selectByEmailIncludeDel(c, userEmail);
+			if (!accountRow) {
+				console.warn(`发送欢迎邮件失败：找不到用户账户 ${userEmail}`);
+				return;
+			}
+
+			// 获取域名对应的 Resend Token
+			const domain = emailUtils.getDomain(userEmail);
+			const resendToken = resendTokens[domain];
+
+			if (!resendToken) {
+				console.warn(`发送欢迎邮件失败：域名 ${domain} 没有配置 Resend Token`);
+				return;
+			}
+
+			// 准备邮件模板变量
+			const registerTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
+			const templateVars = {
+				email: userEmail,
+				registerTime: registerTime
+			};
+
+			// 替换模板变量
+			let subject = welcomeEmailSubject;
+			let htmlContent = welcomeEmailContent;
+			let textContent = welcomeEmailText;
+
+			Object.keys(templateVars).forEach(key => {
+				const placeholder = `{{${key}}}`;
+				subject = subject.replace(new RegExp(placeholder, 'g'), templateVars[key]);
+				htmlContent = htmlContent.replace(new RegExp(placeholder, 'g'), templateVars[key]);
+				textContent = textContent.replace(new RegExp(placeholder, 'g'), templateVars[key]);
+			});
+
+			// 发送邮件
+			const resend = new Resend(resendToken);
+			const sendForm = {
+				from: `系统通知 <${userEmail}>`,
+				to: [userEmail],
+				subject: subject,
+				text: textContent,
+				html: htmlContent
+			};
+
+			const resendResult = await resend.emails.send(sendForm);
+			const { data, error } = resendResult;
+
+			if (error) {
+				console.error(`发送欢迎邮件失败：${error.message}`);
+				return;
+			}
+
+			// 记录发送的邮件到数据库
+			const emailData = {
+				sendEmail: userEmail,
+				name: '系统通知',
+				subject: subject,
+				content: htmlContent,
+				text: textContent,
+				accountId: accountRow.accountId,
+				type: emailConst.type.SEND,
+				userId: userId,
+				status: emailConst.status.SENT,
+				resendEmailId: data.id,
+				recipient: JSON.stringify([{ address: userEmail, name: '' }]),
+				toEmail: userEmail,
+				toName: ''
+			};
+
+			await orm(c).insert(email).values(emailData);
+			console.log(`欢迎邮件发送成功：${userEmail}`);
+
+		} catch (error) {
+			console.error(`发送欢迎邮件异常：`, error);
+		}
 	}
 };
 

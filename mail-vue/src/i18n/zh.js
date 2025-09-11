@@ -289,7 +289,20 @@ const zh = {
     clear: '清除',
     include: '包含',
     delAllEmailConfirm: '确定要删除吗？',
-    s3Configuration: 'S3 配置'
+    s3Configuration: 'S3 配置',
+    welcomeEmail: '欢迎邮件',
+    welcomeEmailDesc: '用户注册成功后自动发送欢迎邮件',
+    welcomeEmailSetting: '欢迎邮件设置',
+    welcomeEmailSettingDesc: '配置用户注册成功后发送的欢迎邮件内容',
+    welcomeEmailSubject: '邮件主题',
+    welcomeEmailSubjectPlaceholder: '请输入欢迎邮件主题',
+    welcomeEmailContent: '邮件内容 (HTML)',
+    welcomeEmailContentPlaceholder: '请输入欢迎邮件的HTML内容',
+    welcomeEmailText: '纯文本内容',
+    welcomeEmailTextPlaceholder: '请输入欢迎邮件的纯文本内容',
+    welcomeEmailTips: '可用变量：',
+    userEmailVariable: '用户邮箱地址',
+    registerTimeVariable: '注册时间'
 
 }
 export default zh

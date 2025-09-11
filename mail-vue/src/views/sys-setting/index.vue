@@ -180,6 +180,22 @@
                   </el-button>
                 </div>
               </div>
+              <div class="setting-item">
+                <div>
+                  <span>{{ $t('welcomeEmail') }}</span>
+                  <el-tooltip effect="dark" :content="$t('welcomeEmailDesc')">
+                    <Icon class="warning" icon="fe:warning" width="18" height="18"/>
+                  </el-tooltip>
+                </div>
+                <div>
+                  <el-switch @change="change" :before-change="beforeChange" :active-value="1" :inactive-value="0"
+                             v-model="setting.welcomeEmailEnabled"/>
+                  <el-button class="opt-button" style="margin-left: 10px" @click="openWelcomeEmailSetting" size="small"
+                             type="primary">
+                    <Icon icon="fluent:settings-48-regular" width="16" height="16"/>
+                  </el-button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -643,6 +659,59 @@
           </div>
         </form>
       </el-dialog>
+      <el-dialog
+          v-model="welcomeEmailShow"
+          class="welcome-email-dialog"
+          width="600px"
+      >
+        <template #header>
+          <div class="forward-head">
+            <span class="forward-set-title">{{ $t('welcomeEmailSetting') }}</span>
+            <el-tooltip effect="dark" :content="$t('welcomeEmailSettingDesc')">
+              <Icon class="warning" icon="fe:warning" width="18" height="18"/>
+            </el-tooltip>
+          </div>
+        </template>
+        <div class="welcome-email-body">
+          <div class="welcome-email-item">
+            <label>{{ $t('welcomeEmailSubject') }}:</label>
+            <el-input v-model="welcomeEmailForm.subject" :placeholder="$t('welcomeEmailSubjectPlaceholder')"/>
+          </div>
+          <div class="welcome-email-item">
+            <label>{{ $t('welcomeEmailContent') }}:</label>
+            <el-input
+                type="textarea"
+                :rows="8"
+                v-model="welcomeEmailForm.content"
+                :placeholder="$t('welcomeEmailContentPlaceholder')"
+            />
+          </div>
+          <div class="welcome-email-item">
+            <label>{{ $t('welcomeEmailText') }}:</label>
+            <el-input
+                type="textarea"
+                :rows="4"
+                v-model="welcomeEmailForm.text"
+                :placeholder="$t('welcomeEmailTextPlaceholder')"
+            />
+          </div>
+          <div class="welcome-email-tips">
+            <p>{{ $t('welcomeEmailTips') }}</p>
+            <ul>
+              <li><code>{{email}}</code> - {{ $t('userEmailVariable') }}</li>
+              <li><code>{{registerTime}}</code> - {{ $t('registerTimeVariable') }}</li>
+            </ul>
+          </div>
+        </div>
+        <template #footer>
+          <div class="dialog-footer">
+            <el-button @click="welcomeEmailShow = false">{{ $t('cancel') }}</el-button>
+            <el-button :loading="settingLoading" type="primary" @click="saveWelcomeEmail">
+              {{ $t('save') }}
+            </el-button>
+          </div>
+        </template>
+      </el-dialog>
     </el-scrollbar>
   </div>
 </template>
@@ -687,6 +756,7 @@ const noticePopupShow = ref(false)
 const thirdEmailShow = ref(false)
 const forwardRulesShow = ref(false)
 const showResendList = ref(false)
+const welcomeEmailShow = ref(false)
 const settingStore = useSettingStore();
 const uiStore = useUiStore();
 const {settings: setting} = storeToRefs(settingStore);
@@ -757,6 +827,11 @@ const emailColumnWidth = ref(0)
 const tokenColumnWidth = ref(0)
 const ruleType = ref(0)
 const ruleEmail = ref([])
+const welcomeEmailForm = reactive({
+  subject: '',
+  content: '',
+  text: ''
+})
 
 getSettings()
 getUpdate()
@@ -927,6 +1002,13 @@ function openForwardRules() {
   forwardRulesShow.value = true
 }
 
+function openWelcomeEmailSetting() {
+  welcomeEmailForm.subject = setting.value.welcomeEmailSubject || ''
+  welcomeEmailForm.content = setting.value.welcomeEmailContent || ''
+  welcomeEmailForm.text = setting.value.welcomeEmailText || ''
+  welcomeEmailShow.value = true
+}
+
 function emailAddTag(val) {
   const emails = Array.from(new Set(
       val.split(/[,，]/).map(item => item.trim()).filter(item => item)
@@ -1019,6 +1101,15 @@ function ruleEmailSave() {
   const form = {
     ruleEmail: ruleEmail.value + '',
     ruleType: ruleType.value
+  }
+  editSetting(form)
+}
+
+function saveWelcomeEmail() {
+  const form = {
+    welcomeEmailSubject: welcomeEmailForm.subject,
+    welcomeEmailContent: welcomeEmailForm.content,
+    welcomeEmailText: welcomeEmailForm.text
   }
   editSetting(form)
 }
@@ -1209,6 +1300,7 @@ function editSetting(settingForm, refreshStatus = true) {
     regVerifyCountShow.value = false
     noticePopupShow.value = false
     addS3Show.value = false
+    welcomeEmailShow.value = false
   }).catch((e) => {
     loginOpacity.value = setting.value.loginOpacity
     setting.value = {...setting.value, ...JSON.parse(backup)}
@@ -1665,6 +1757,55 @@ form .el-button {
 
 :deep(.el-select__wrapper) {
   min-height: 28px;
+}
+
+.welcome-email-dialog {
+  .welcome-email-body {
+    padding: 20px 0;
+
+    .welcome-email-item {
+      margin-bottom: 20px;
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--text-color);
+      }
+    }
+
+    .welcome-email-tips {
+      margin-top: 20px;
+      padding: 15px;
+      background: var(--extra-light-fill);
+      border-radius: 6px;
+      border-left: 4px solid var(--primary-color);
+
+      p {
+        margin: 0 0 10px 0;
+        font-weight: 500;
+        color: var(--text-color);
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 20px;
+
+        li {
+          margin-bottom: 5px;
+          color: var(--text-color-secondary);
+
+          code {
+            background: var(--light-fill);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-color);
+          }
+        }
+      }
+    }
+  }
 }
 
 </style>
