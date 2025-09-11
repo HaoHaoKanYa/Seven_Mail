@@ -343,13 +343,13 @@
               <div class="concerning-item">
                 <span>{{ $t('community') }} : </span>
                 <div class="community">
-                  <el-button @click="jump('https://github.com/HaoHaoKanYa/one-mail')"
+                  <el-button @click="jump('https://github.com/HaoHaoKanYa/one-mail')">
                     Github
                     <template #icon>
                       <Icon icon="codicon:github-inverted" width="22" height="22"/>
                     </template>
                   </el-button>
-                  <el-button @click="jump('#')"
+                  <el-button @click="jump('#')">
                     Telegram
                     <template #icon>
                       <Icon icon="logos:telegram" width="30" height="30"/>
@@ -359,7 +359,7 @@
               </div>
               <div class="concerning-item">
                 <span>{{ $t('support') }} : </span>
-                <el-button @click="jump('#')"
+                <el-button @click="jump('#')">
                   {{ t('supportDesc') }}
                   <template #icon>
                     <Icon color="#79D6B5" icon="simple-icons:buymeacoffee" width="20" height="20"/>
@@ -368,7 +368,7 @@
               </div>
               <div class="concerning-item">
                 <span>{{ $t('help') }} : </span>
-                <el-button @click="jump('https://github.com/HaoHaoKanYa/one-mail')"
+                <el-button @click="jump('https://github.com/HaoHaoKanYa/one-mail')">
                   {{ t('document') }}
                   <template #icon>
                     <Icon color="#79D6B5" icon="fluent-color:document-32" width="18" height="18"/>
