@@ -74,8 +74,6 @@ Thanks to the original author [eoao](https://github.com/eoao) for the excellent 
 
 [DartNode](https://dartnode.com)：Providing cloud computing service resource support.
 
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
-
 ## License
 
 This project is licensed under the [MIT](LICENSE) license.

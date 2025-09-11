@@ -80,7 +80,6 @@
 
 [DartNode](https://dartnode.com)：提供云计算服务资源支持
 
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
 
 ## 许可证
 
