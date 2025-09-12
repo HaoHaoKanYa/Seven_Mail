@@ -673,6 +673,13 @@ const emailService = {
 				return;
 			}
 
+			// 获取管理员账户信息（用于记录发件人）
+			const adminAccountRow = await accountService.selectByEmailIncludeDel(c, c.env.admin);
+			if (!adminAccountRow) {
+				console.warn(`发送欢迎邮件失败：找不到管理员账户 ${c.env.admin}`);
+				return;
+			}
+
 			// 获取域名对应的 Resend Token
 			const domain = emailUtils.getDomain(userEmail);
 			const resendToken = resendTokens[domain];
@@ -704,7 +711,7 @@ const emailService = {
 			// 发送邮件
 			const resend = new Resend(resendToken);
 			const sendForm = {
-				from: `系统通知 <${userEmail}>`,
+				from: `系统通知 <${c.env.admin}>`,
 				to: [userEmail],
 				subject: subject,
 				text: textContent,
@@ -721,12 +728,12 @@ const emailService = {
 
 			// 记录发送的邮件到数据库
 			const emailData = {
-				sendEmail: userEmail,
+				sendEmail: c.env.admin,
 				name: '系统通知',
 				subject: subject,
 				content: htmlContent,
 				text: textContent,
-				accountId: accountRow.accountId,
+				accountId: adminAccountRow.accountId,
 				type: emailConst.type.SEND,
 				userId: userId,
 				status: emailConst.status.SENT,
