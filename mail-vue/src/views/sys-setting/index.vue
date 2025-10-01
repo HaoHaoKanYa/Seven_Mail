@@ -348,7 +348,7 @@
               <div class="concerning-item">
                 <span>{{ $t('version') }} :</span>
                 <el-badge is-dot :hidden="!hasUpdate">
-                  <el-button @click="jump('https://github.com/HaoHaoKanYa/one-mail/releases')">
+                  <el-button @click="jump('https://github.com/HaoHaoKanYa/Seven_Mail/releases')">
                     {{ currentVersion }}
                     <template #icon>
                       <Icon icon="qlementine-icons:version-control-16" style="font-size: 20px" color="#1890FF"/>
@@ -359,7 +359,7 @@
               <div class="concerning-item">
                 <span>{{ $t('community') }} : </span>
                 <div class="community">
-                  <el-button @click="jump('https://github.com/HaoHaoKanYa/one-mail')">
+                  <el-button @click="jump('https://github.com/HaoHaoKanYa/Seven_Mail')">
                     Github
                     <template #icon>
                       <Icon icon="codicon:github-inverted" width="22" height="22"/>
@@ -384,7 +384,7 @@
               </div>
               <div class="concerning-item">
                 <span>{{ $t('help') }} : </span>
-                <el-button @click="jump('https://github.com/HaoHaoKanYa/one-mail')">
+                <el-button @click="jump('https://github.com/HaoHaoKanYa/Seven_Mail')">
                   {{ t('document') }}
                   <template #icon>
                     <Icon color="#79D6B5" icon="fluent-color:document-32" width="18" height="18"/>
@@ -900,7 +900,7 @@ const resendList = computed(() => {
 
 function getUpdate() {
   if (getUpdateErrorCount > 5 || !getUpdateErrorCount) return
-  axios.get('https://api.github.com/repos/HaoHaoKanYa/one-mail/releases/latest').then(({data}) => {
+  axios.get('https://api.github.com/repos/HaoHaoKanYa/Seven_Mail/releases/latest').then(({data}) => {
     hasUpdate.value = data.name !== currentVersion
     getUpdateErrorCount = 0
   }).catch(e => {
