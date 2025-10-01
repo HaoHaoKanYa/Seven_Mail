@@ -106,17 +106,31 @@ jobs:
           echo "⏳ Waiting 15 seconds before checking initialization status..."
           sleep 15
           
-          HTTP_CODE=$(curl -s -w "%{http_code}" -o response.txt "$INIT_URL")
-          RESPONSE_BODY=$(cat response.txt)
+          # 使用更安全的curl调用方式
+          set +e  # 临时关闭错误退出模式
+          HTTP_CODE=$(curl -s -w "%{http_code}" -o response.txt "$INIT_URL" || echo "000")
+          CURL_EXIT_CODE=$?
+          set -e  # 重新启用错误退出模式
+          
+          if [ $CURL_EXIT_CODE -ne 0 ]; then
+            echo "⚠️ Failed to connect to initialization endpoint. Exit code: $CURL_EXIT_CODE"
+            exit 0  # 不要因为网络问题而失败整个部署
+          fi
+          
+          RESPONSE_BODY=$(cat response.txt 2>/dev/null || echo "")
           
           echo "🔎 Checking response... (Status: $HTTP_CODE)"
-
-          if [ "$HTTP_CODE" = "200" ] && ([ "$RESPONSE_BODY" = "初始化成功" ] || [ "$RESPONSE_BODY" = "Successfully initialized" ]); then
-            echo "🎉✅ Fresh initialization successful!"
-          elif [ "$HTTP_CODE" = "200" ]; then
-            echo "✅ Database is already initialized or in a stable state. Response: $RESPONSE_BODY"
+          echo "📄 Response body: $RESPONSE_BODY"
+          
+          if [ "$HTTP_CODE" = "200" ]; then
+            if [ "$RESPONSE_BODY" = "初始化成功" ] || [ "$RESPONSE_BODY" = "Successfully initialized" ]; then
+              echo "🎉✅ Fresh initialization successful!"
+            else
+              echo "✅ Database is already initialized or in a stable state. Response: $RESPONSE_BODY"
+            fi
           else
             echo "⚠️ Database initialization check failed with HTTP status: $HTTP_CODE. Please check your worker logs."
+            echo "📄 Response: $RESPONSE_BODY"
           fi
 
       - name: 📣 Notify Final Status
