@@ -3,7 +3,7 @@
 </p>
 
 <div align="center">
-<h1>Cloud Mail</h1>
+<h1>Seven Mail</h1>
 </div>
 <div align="center">
     <h4>使用Vue3开发的响应式邮箱服务，支持邮件发送，无需服务器可部署到Cloudflare平台 🎉</h4> 

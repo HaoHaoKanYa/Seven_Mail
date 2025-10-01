@@ -4,7 +4,7 @@
 </p>
 
 <div align="center">
-<h1>Cloud Mail</h1>
+<h1>Seven Mail</h1>
 </div>
 <div align="center">
     <h4>A responsive email service built with Vue 3 that supports email sending and can be deployed on Cloudflare. 🎉</h4> 
