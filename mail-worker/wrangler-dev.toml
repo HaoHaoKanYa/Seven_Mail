@@ -1,4 +1,4 @@
-name = "Seven_Mail-dev"
+name = "seven-mail-dev"
 main = "src/index.js"
 compatibility_date = "2025-06-04"
 keep_vars = true

@@ -1,0 +1,78 @@
+2025-10-01T16:52:51.729Z	Initializing build environment...
+2025-10-01T16:53:00.035Z	Success: Finished initializing build environment
+2025-10-01T16:53:00.321Z	Cloning repository...
+2025-10-01T16:53:01.568Z	Restoring from dependencies cache
+2025-10-01T16:53:01.571Z	Restoring from build output cache
+2025-10-01T16:53:01.580Z	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0, pnpm@10.11.1
+2025-10-01T16:53:11.723Z	Failed to restore dependencies from build cache. Skipping.
+2025-10-01T16:53:11.731Z	Installing project dependencies: pnpm install --frozen-lockfile
+2025-10-01T16:53:13.019Z	Lockfile is up to date, resolution step is skipped
+2025-10-01T16:53:13.147Z	Progress: resolved 1, reused 0, downloaded 0, added 0
+2025-10-01T16:53:13.222Z	Packages: +336
+2025-10-01T16:53:13.223Z	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2025-10-01T16:53:14.151Z	Progress: resolved 336, reused 0, downloaded 0, added 0
+2025-10-01T16:53:15.151Z	Progress: resolved 336, reused 0, downloaded 53, added 53
+2025-10-01T16:53:16.153Z	Progress: resolved 336, reused 0, downloaded 127, added 119
+2025-10-01T16:53:17.154Z	Progress: resolved 336, reused 0, downloaded 153, added 141
+2025-10-01T16:53:18.880Z	Progress: resolved 336, reused 0, downloaded 154, added 141
+2025-10-01T16:53:19.880Z	Progress: resolved 336, reused 0, downloaded 168, added 153
+2025-10-01T16:53:20.884Z	Progress: resolved 336, reused 0, downloaded 189, added 178
+2025-10-01T16:53:21.882Z	Progress: resolved 336, reused 0, downloaded 195, added 182
+2025-10-01T16:53:22.883Z	Progress: resolved 336, reused 0, downloaded 207, added 195
+2025-10-01T16:53:23.883Z	Progress: resolved 336, reused 0, downloaded 279, added 272
+2025-10-01T16:53:24.802Z	Progress: resolved 336, reused 0, downloaded 336, added 336, done
+2025-10-01T16:53:24.971Z	.../sharp@0.33.5/node_modules/sharp install$ node install/check
+2025-10-01T16:53:24.972Z	.../esbuild@0.17.19/node_modules/esbuild postinstall$ node install.js
+2025-10-01T16:53:24.972Z	.../esbuild@0.25.9/node_modules/esbuild postinstall$ node install.js
+2025-10-01T16:53:24.973Z	.../node_modules/workerd postinstall$ node install.js
+2025-10-01T16:53:25.044Z	.../node_modules/workerd postinstall$ node install.js
+2025-10-01T16:53:25.315Z	.../esbuild@0.17.19/node_modules/esbuild postinstall: Done
+2025-10-01T16:53:24.802Z	Progress: resolved 336, reused 0, downloaded 336, added 336, done
+2025-10-01T16:53:24.971Z	.../sharp@0.33.5/node_modules/sharp install$ node install/check
+2025-10-01T16:53:24.972Z	.../esbuild@0.17.19/node_modules/esbuild postinstall$ node install.js
+2025-10-01T16:53:24.972Z	.../esbuild@0.25.9/node_modules/esbuild postinstall$ node install.js
+2025-10-01T16:53:24.973Z	.../node_modules/workerd postinstall$ node install.js
+2025-10-01T16:53:25.044Z	.../node_modules/workerd postinstall$ node install.js
+2025-10-01T16:53:25.315Z	.../esbuild@0.17.19/node_modules/esbuild postinstall: Done
+2025-10-01T16:53:26.952Z	.../esbuild@0.25.4/node_modules/esbuild postinstall$ node install.js
+2025-10-01T16:53:38.318Z	.../node_modules/workerd postinstall: Done
+2025-10-01T16:53:38.364Z	.../sharp@0.33.5/node_modules/sharp install: Done
+2025-10-01T16:53:38.436Z	.../esbuild@0.25.9/node_modules/esbuild postinstall: Done
+2025-10-01T16:53:39.429Z	.../node_modules/workerd postinstall$ node install.js
+2025-10-01T16:53:39.562Z	.../esbuild@0.25.4/node_modules/esbuild postinstall: Done
+2025-10-01T16:53:39.583Z	.../node_modules/workerd postinstall: Done
+2025-10-01T16:53:39.833Z	.../node_modules/workerd postinstall: Done
+2025-10-01T16:53:41.045Z	Executing user deploy command: npx wrangler deploy
+2025-10-01T16:53:40.933Z	
+2025-10-01T16:53:40.934Z	dependencies:
+2025-10-01T16:53:40.934Z	+ @aws-sdk/client-s3 3.882.0
+2025-10-01T16:53:40.936Z	+ @cloudflare/vite-plugin 1.6.0
+2025-10-01T16:53:40.936Z	+ dayjs 1.11.18
+2025-10-01T16:53:40.936Z	+ drizzle-orm 0.42.0
+2025-10-01T16:53:40.936Z	+ hono 4.9.5
+2025-10-01T16:53:40.936Z	+ i18next 25.4.2
+2025-10-01T16:53:40.936Z	+ linkedom 0.18.12
+2025-10-01T16:53:40.937Z	+ postal-mime 2.4.4
+2025-10-01T16:53:40.937Z	+ resend 4.8.0
+2025-10-01T16:53:40.937Z	+ ua-parser-js 2.0.4
+2025-10-01T16:53:40.937Z	+ uuid 11.1.0
+2025-10-01T16:53:40.937Z	
+2025-10-01T16:53:40.937Z	devDependencies:
+2025-10-01T16:53:40.937Z	+ @cloudflare/vitest-pool-workers 0.7.8
+2025-10-01T16:53:40.937Z	+ vitest 3.0.9
+2025-10-01T16:53:40.937Z	+ wrangler 4.33.1
+2025-10-01T16:53:40.937Z	
+2025-10-01T16:53:40.967Z	Done in 28.7s
+2025-10-01T16:53:43.260Z	
+2025-10-01T16:53:43.261Z	 ⛅️ wrangler 4.33.1 (update available 4.40.3)
+2025-10-01T16:53:43.262Z	─────────────────────────────────────────────
+2025-10-01T16:53:43.267Z	
+2025-10-01T16:53:43.348Z	✘ [ERROR] Processing wrangler.toml configuration:
+2025-10-01T16:53:43.348Z	
+2025-10-01T16:53:43.349Z	    - Expected "name" to be of type string, alphanumeric and lowercase with dashes only but got "Seven_Mail".
+2025-10-01T16:53:43.349Z	
+2025-10-01T16:53:43.349Z	
+2025-10-01T16:53:43.364Z	
+2025-10-01T16:53:43.364Z	Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+2025-10-01T16:53:43.387Z	🪵  Logs were written to "/opt/buildhome/.config/.wrangler/logs/wrangler-2025-10-01_16-53-42_612.log"
+2025-10-01T16:53:43.574Z	Failed: error occurred while running deploy command
