@@ -103,7 +103,7 @@ jobs:
             exit 0
           fi
           
-          echo "⏳ Waiting 15 秒之前 before checking initialization status..."
+          echo "⏳ Waiting 15 seconds before checking initialization status..."
           sleep 15
           
           HTTP_CODE=$(curl -s -w "%{http_code}" -o response.txt "$INIT_URL")
@@ -111,7 +111,7 @@ jobs:
           
           echo "🔎 Checking response... (Status: $HTTP_CODE)"
 
-          if [ "$HTTP_CODE" = "200" ] && [ "$RESPONSE_BODY" = "初始化成功" ]; then
+          if [ "$HTTP_CODE" = "200" ] && ([ "$RESPONSE_BODY" = "初始化成功" ] || [ "$RESPONSE_BODY" = "Successfully initialized" ]); then
             echo "🎉✅ Fresh initialization successful!"
           elif [ "$HTTP_CODE" = "200" ]; then
             echo "✅ Database is already initialized or in a stable state. Response: $RESPONSE_BODY"
