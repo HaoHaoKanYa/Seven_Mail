@@ -53,15 +53,16 @@ const init = {
 
 		const noticeContent = '本项目仅供学习交流，禁止用于违法业务\n' +
 			'<br>\n' +
-			'请遵守当地法规，作者不承担任何法律责任\n' +
-			'<div style="display: flex;gap: 18px;margin-top: 10px;">\n' +
-			'<a href="https://github.com/HaoHaoKanYa/Seven_Mail" target="_blank" >\n' +
-			'<img src="https://api.iconify.design/codicon:github-inverted.svg" alt="GitHub" width="25" height="25" />\n' +
-			'</a>\n' +
-			'<a href="#" target="_blank" >\n' +
-			'<img src="https://api.iconify.design/logos:telegram.svg" alt="Telegram" width="25" height="25" />\n' +
-			'</a>\n' +
-			'</div>\n'
+			'请遵守当地法规，作者不承担任何法律责任\n'
+			// '以下的 GitHub 和 Telegram 图标已被隐藏\n' +
+			// '<div style="display: flex;gap: 18px;margin-top: 10px;">\n' +
+			// '<a href="https://github.com/HaoHaoKanYa/Seven_Mail" target="_blank" >\n' +
+			// '<img src="https://api.iconify.design/codicon:github-inverted.svg" alt="GitHub" width="25" height="25" />\n' +
+			// '</a>\n' +
+			// '<a href="#" target="_blank" >\n' +
+			// '<img src="https://api.iconify.design/logos:telegram.svg" alt="Telegram" width="25" height="25" />\n' +
+			// '</a>\n' +
+			// '</div>\n'
 
 		const ADD_COLUMN_SQL_LIST = [
 			`ALTER TABLE setting ADD COLUMN reg_verify_count INTEGER NOT NULL DEFAULT 1;`,
