@@ -131,6 +131,8 @@ const zh = {
     hasAccount: '已有账号?',
     regSwitch: '创建账号',
     loginSwitch: '去登录',
+    rememberAccount: '记住账号',
+    autoLogin: '下次自动登录',
     websiteSetting: '网站设置',
     websiteReg: '用户注册',
     loginDomain: '登录框域名',

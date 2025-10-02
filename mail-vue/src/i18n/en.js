@@ -131,6 +131,8 @@ const en = {
     hasAccount: 'Already have an account? \u200B',
     regSwitch: 'Sign up',
     loginSwitch: 'Sign in',
+    rememberAccount: 'Remember account',
+    autoLogin: 'Auto login next time',
     websiteSetting: 'Website',
     websiteReg: 'Sign Up',
     loginDomain: 'Sign-In Box Domain',

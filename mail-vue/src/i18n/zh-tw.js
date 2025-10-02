@@ -131,6 +131,8 @@ const zhTW = {
     hasAccount: '已有帳戶？\u200B',
     regSwitch: '註冊',
     loginSwitch: '登入',
+    rememberAccount: '記住帳戶',
+    autoLogin: '下次自動登入',
     websiteSetting: '網站',
     websiteReg: '註冊',
     loginDomain: '登入框網域',

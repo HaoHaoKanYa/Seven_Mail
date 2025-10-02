@@ -41,6 +41,13 @@
           </el-input>
           <el-input v-model="form.password" :placeholder="$t('password')" type="password" autocomplete="off">
           </el-input>
+          
+          <!-- 记住账号和自动登录选项 -->
+          <div class="login-options">
+            <el-checkbox v-model="rememberAccount" :label="$t('rememberAccount')" size="small" />
+            <el-checkbox v-model="autoLogin" :label="$t('autoLogin')" size="small" />
+          </div>
+          
           <el-button class="btn" type="primary" @click="submit" :loading="loginLoading"
           >{{ $t('loginBtn') }}
           </el-button>
@@ -93,7 +100,7 @@
           </el-button>
         </div>
         <template v-if="settingStore.settings.register === 0">
-          <div class="switch" @click="show = 'register'" v-if="show === 'login'">{{ $t('noAccount') }}
+          <div class="switch" @click="show = 'register'; autoLogin = false" v-if="show === 'login'">{{ $t('noAccount') }}
             <span>{{ $t('regSwitch') }}</span></div>
           <div class="switch" @click="show = 'login'" v-else>{{ $t('hasAccount') }} <span>{{ $t('loginSwitch') }}</span>
           </div>
@@ -105,7 +112,7 @@
 
 <script setup>
 import router from "@/router";
-import {computed, nextTick, reactive, ref} from "vue";
+import {computed, nextTick, reactive, ref, onMounted, watch} from "vue";
 import {login} from "@/request/login.js";
 import {register} from "@/request/login.js";
 import {isEmail} from "@/utils/verify-utils.js";
@@ -129,8 +136,9 @@ const show = ref('login')
 const form = reactive({
   email: '',
   password: '',
-
 });
+const rememberAccount = ref(false);
+const autoLogin = ref(false);
 const mySelect = ref()
 const suffix = ref('')
 const registerForm = reactive({
@@ -147,6 +155,83 @@ let verifyToken = ''
 let turnstileId = null
 let botJsError = ref(false)
 let verifyErrorCount = 0
+
+// 初始化函数
+onMounted(() => {
+  initializeLoginData();
+});
+
+// 监听复选框变化
+watch([rememberAccount, autoLogin], () => {
+  // 如果不记住账号，自动登录也要关闭
+  if (!rememberAccount.value) {
+    autoLogin.value = false;
+  }
+  // 如果启用自动登录，必须记住账号
+  if (autoLogin.value) {
+    rememberAccount.value = true;
+  }
+});
+
+// 初始化登录数据
+const initializeLoginData = () => {
+  // 恢复记住的账号
+  const savedAccount = localStorage.getItem('rememberedAccount');
+  if (savedAccount) {
+    const accountData = JSON.parse(savedAccount);
+    form.email = accountData.email || '';
+    suffix.value = accountData.suffix || domainList[0];
+    rememberAccount.value = true;
+  }
+  
+  // 恢复自动登录设置
+  const savedAutoLogin = localStorage.getItem('autoLogin');
+  if (savedAutoLogin === 'true') {
+    autoLogin.value = true;
+    // 如果启用了自动登录且有保存的密码，尝试自动登录
+    const savedPassword = localStorage.getItem('rememberedPassword');
+    if (savedPassword && form.email) {
+      form.password = savedPassword;
+      // 延迟执行自动登录，给页面加载时间
+      setTimeout(() => {
+        if (autoLogin.value && form.email && form.password) {
+          submit();
+        }
+      }, 1000);
+    }
+  }
+};
+
+// 保存账号信息
+const saveAccountInfo = () => {
+  if (rememberAccount.value) {
+    const accountData = {
+      email: form.email,
+      suffix: suffix.value
+    };
+    localStorage.setItem('rememberedAccount', JSON.stringify(accountData));
+    
+    if (autoLogin.value) {
+      localStorage.setItem('rememberedPassword', form.password);
+      localStorage.setItem('autoLogin', 'true');
+    } else {
+      localStorage.removeItem('rememberedPassword');
+      localStorage.setItem('autoLogin', 'false');
+    }
+  } else {
+    // 不记住账号时清除所有保存的信息
+    localStorage.removeItem('rememberedAccount');
+    localStorage.removeItem('rememberedPassword');
+    localStorage.setItem('autoLogin', 'false');
+  }
+};
+
+// 清除保存的登录信息
+const clearSavedLoginInfo = () => {
+  localStorage.removeItem('rememberedAccount');
+  localStorage.removeItem('rememberedPassword');
+  localStorage.setItem('autoLogin', 'false');
+};
 
 window.onTurnstileSuccess = (token) => {
   verifyToken = token;
@@ -230,6 +315,9 @@ const submit = () => {
 
   loginLoading.value = true
   login(email, form.password).then(async data => {
+    // 登录成功后保存账号信息
+    saveAccountInfo();
+    
     localStorage.setItem('token', data.token)
     const user = await loginUserInfo();
     accountStore.currentAccountId = user.accountId;
@@ -240,6 +328,14 @@ const submit = () => {
     });
     await router.replace({name: 'layout'})
     uiStore.showNotice()
+  }).catch(error => {
+    // 登录失败时清除保存的密码信息（但保留账号）
+    if (autoLogin.value) {
+      localStorage.removeItem('rememberedPassword');
+      localStorage.setItem('autoLogin', 'false');
+      autoLogin.value = false;
+    }
+    throw error; // 重新抛出错误让Element Plus处理
   }).finally(() => {
     loginLoading.value = false
   })
@@ -457,6 +553,26 @@ function submitRegister() {
     span {
       color: var(--login-switch-color);
       cursor: pointer;
+    }
+  }
+
+  .login-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+    
+    @media (min-width: 480px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    :deep(.el-checkbox) {
+      .el-checkbox__label {
+        font-size: 14px;
+        color: var(--el-text-color-regular);
+      }
     }
   }
 
